@@ -1,17 +1,24 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="user" v-for="user in allUsers" :key="user.id">
+      <h2><b>Name: </b>{{user.name}}</h2>
+      <p><b>Email:</b> {{user.email}}</p>
+      <p><b>Phone:</b> {{user.phone}}</p>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'app',
-  components: {
-    HelloWorld
+  computed: mapGetters(['allUsers']),
+  methods: mapActions(['fetchUsers']),
+  async mounted() {
+    // this.$store.dispatch('fetchUsers')
+
+    //Передаем параметр - лимит пользователей для отображения
+    this.fetchUsers(10);
   }
 }
 </script>
@@ -23,6 +30,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /* margin-top: 60px; */
+  margin: 60px auto;
+  width: 400px;
+}
+
+.user {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 </style>
